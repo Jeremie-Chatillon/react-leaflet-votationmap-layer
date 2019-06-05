@@ -14,10 +14,11 @@ class App extends Component {
     return (
       <div className="App">
         <MyMap />
-
+{/**
         <script type="text/javascript" >
           VotationLayer().
         </script>
+*/}
       </div>
     );
   }

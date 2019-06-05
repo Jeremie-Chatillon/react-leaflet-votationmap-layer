@@ -9,7 +9,7 @@ class VotationLayer {
     this._width = canvas.width;
     this._height = canvas.height;
 
-    this._opacity = 100;
+    this._opacity = 255;
     this._radius = 60;
 
     this._maxVoation = 5;
@@ -18,11 +18,11 @@ class VotationLayer {
     /*
     this._startColor = '#FF0000';
     this._endColor = '#00FF00';
-
+ 
     this._startColorRGB = this.htmlColorToRGB(this._startColor);
     this._endColorRGB = this.htmlColorToRGB(this._endColor);
-
-
+ 
+ 
     */
 
     this.setColor('#FF0000', '#00FF00')
@@ -36,6 +36,13 @@ class VotationLayer {
 
   }
 
+  getColor(color){
+    colors = {
+      1:"red",
+      2:green
+    }
+  }
+
   resetImageData() {
     this._imagedata = this._ctx.createImageData(this._width, this._height);
   }
@@ -45,13 +52,17 @@ class VotationLayer {
   }
 
   addData(datas) {
+    this._
     datas.map(d => {
-      this._data.push(d)
+      this._ctx.beginPath();
+      this._ctx.fillStyle='red';
+      this._ctx.arc(d.x,d.y,10,0,2*Math.PI);
+      this._ctx.fill();
     });
   }
 
-  setOpacity(opacity){
-    this.assertError((opacity<=0 && opacity >=255), "Error, the opacity should be in range 0 to 255");
+  setOpacity(opacity) {
+    this.assertError((opacity <= 0 && opacity >= 255), "Error, the opacity should be in range 0 to 255");
     this._opacity = opacity;
   }
 
@@ -60,16 +71,16 @@ class VotationLayer {
   }
 
 
-  setRGBGradiant(){
+  setRGBGradiant() {
     this.colorCalculator = this.uniqueRGBGradient
   }
 
-  
-  setHSVGradiant(){
+
+  setHSVGradiant() {
     this.colorCalculator = this.uniqueHSVGradient
   }
 
-  setHSVInvertGradiant(){
+  setHSVInvertGradiant() {
     this.colorCalculator = this.uniqueHSVInvertedGradient
   }
 
@@ -83,7 +94,7 @@ class VotationLayer {
     this._startColorHSV = this.rgbToHSV(this._startColorRGB);
     this._endColorHSV = this.rgbToHSV(this._endColorRGB);
 
-    this._delta = (this._endColorHSV.h - this._startColorHSV.h + 360)%360;
+    this._delta = (this._endColorHSV.h - this._startColorHSV.h + 360) % 360;
   }
 
   uniqueRGBGradient(value) {
@@ -93,8 +104,8 @@ class VotationLayer {
     const red = startColorDecimal.r + (value * (endColorDecimal.r - startColorDecimal.r));
     const green = startColorDecimal.g + (value * (endColorDecimal.g - startColorDecimal.g));
     const blue = startColorDecimal.b + (value * (endColorDecimal.b - startColorDecimal.b));
-    
-    return {r:red, g:green, b:blue};
+
+    return { r: red, g: green, b: blue };
   }
 
   // https://www.rapidtables.com/convert/color/rgb-to-hsv.html
@@ -137,7 +148,7 @@ class VotationLayer {
     const m = color.v - c;
 
     var rgbColorPrim = {};
-    
+
     if (h < 60)
       rgbColorPrim = { r: c, g: x, b: 0 }
     else if (h < 120)
@@ -151,27 +162,27 @@ class VotationLayer {
     else
       rgbColorPrim = { r: c, g: 0, b: x }
 
-    const r = Math.round((rgbColorPrim.r + m) *255);
-    const g = Math.round((rgbColorPrim.g + m) *255);
-    const b = Math.round((rgbColorPrim.b + m) *255);
+    const r = Math.round((rgbColorPrim.r + m) * 255);
+    const g = Math.round((rgbColorPrim.g + m) * 255);
+    const b = Math.round((rgbColorPrim.b + m) * 255);
 
-    return {r:r, g:g, b:b};
+    return { r: r, g: g, b: b };
 
   }
 
   uniqueHSVGradient(value) {
-   const newH = ((this._delta * value) + this._startColorHSV.h)%360;
+    const newH = ((this._delta * value) + this._startColorHSV.h) % 360;
 
-    const HSVPrim= {h:newH, s:this._startColorHSV.s, v:this._startColorHSV.v}
-    
-    return this.HSVToRGB( HSVPrim);
+    const HSVPrim = { h: newH, s: this._startColorHSV.s, v: this._startColorHSV.v }
+
+    return this.HSVToRGB(HSVPrim);
   }
 
   uniqueHSVInvertedGradient(value) {
-    const newH = (this._endColorHSV.h + ((360 - this._delta) * (1 - value)))%360;
+    const newH = (this._endColorHSV.h + ((360 - this._delta) * (1 - value))) % 360;
 
-    const HSVPrim= {h:newH, s:this._startColorHSV.s, v:this._startColorHSV.v}
-    
+    const HSVPrim = { h: newH, s: this._startColorHSV.s, v: this._startColorHSV.v }
+
     return this.HSVToRGB(HSVPrim);
   }
 
@@ -183,24 +194,24 @@ class VotationLayer {
     const green = parseInt(col[3] + col[4], 16);
     const blue = parseInt(col[5] + col[6], 16);
 
-    return {r:red, g: green, b:blue};
+    return { r: red, g: green, b: blue };
   }
 
   redraw() {
     this.resetImageData();
 
-
+    
     const values = this.computeData();
 
     for (var key in values) {
       // Résutat de la moyenne des votations.
       // -1 car les votations sont définite de [1;n] => on obtient de [0;n-1]
       // Divisé par le nombre de votations pour avoir un nombre normalisé entr [0;1]
-      const nValue = ((values[key].sum / values[key].count) -1) / this._maxVoation;
-      
+      const nValue = ((values[key].sum / values[key].count) - 1) / this._maxVoation;
+
       // Récupère la couleur résultante à la votation
       const colors = this.colorCalculator(nValue);
-      
+
       // application de la couleur RGB sur le bon pixel.
       const index = key * 4;
       this._imagedata.data[index] = colors.r;        // Red
@@ -212,10 +223,10 @@ class VotationLayer {
     this._imagedata.data[index] = 0;        // Red
     this._imagedata.data[index + 1] = 0;    // Green
     this._imagedata.data[index + 2] = 0;    // Blue
-    this._imagedata.data[index + 3] = 255;  
+    this._imagedata.data[index + 3] = 255;
 
     this._ctx.putImageData(this._imagedata, 0, 0);
-    
+
   }
 
   computeData() {
@@ -235,7 +246,7 @@ class VotationLayer {
           const yInd = d.y - j;
 
           // Condition pour ne pas dépasser les limites du canvas
-          if(!(xInd < 0 || xInd >= width || yInd < 0 || yInd >= height)){
+          if (!(xInd < 0 || xInd >= width || yInd < 0 || yInd >= height)) {
             // Condition pour faire un rond
             if (j * j + i * i <= radius * radius) {
               var pixelindex = (xInd + (yInd) * width);
@@ -283,6 +294,8 @@ class VotationLayer {
 
 }
 
+/*
 exports._test = {
-  VotationLayer: VotationLayer,
+    VotationLayer: VotationLayer,
 }
+*/

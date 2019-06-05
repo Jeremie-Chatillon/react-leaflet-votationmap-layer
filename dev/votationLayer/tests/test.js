@@ -7,9 +7,10 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 
-var VotationLayer = require('../VotationLayer.js');
 
-
+//import '../VotationLayer.js';
+var VotationLayersss = require('../VotationLayer.js');
+var VotationLayer = VotationLayersss._test.VotationLayer;
 const {document} = (new JSDOM(`
 <!DOCTYPE html>
 <html>
@@ -80,6 +81,20 @@ describe('VotationLayer color transformation Test', function () {
         const hsvColor = votationLayer.rgbToHSV(rgbColor);
         const rgbColor2 = votationLayer.HSVToRGB(hsvColor);
 
-        rgbColor.should.be.equal(rgbColor);
+        rgbColor2.should.have.property('r').which.is.equal(rgbColor.r);
+        rgbColor2.should.have.property('g').which.is.equal(rgbColor.g);
+        rgbColor2.should.have.property('b').which.is.equal(rgbColor.b);
+    });
+
+    it('{h:50, s: 70, v: 90} HSV to RGB to HSV', function () {
+
+        const hsvColor = {h:50, s: 70, v: 90}
+        const rgbColor = votationLayer.HSVToRGB(hsvColor); 
+        const hsvColor2 = votationLayer.rgbToHSV(rgbColor);
+
+        hsvColor2.should.have.property('h').which.is.equal(hsvColor.h);
+        hsvColor2.should.have.property('s').which.is.equal(hsvColor.s);
+        hsvColor2.should.have.property('v').which.is.equal(hsvColor.v);
     });
 });
+

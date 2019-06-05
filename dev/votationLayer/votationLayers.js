@@ -16,7 +16,7 @@ function votationLayers(canvas) {
 
 
 
-    this._opacity = 255;
+    this._opacity = 100;
     this._radius = 60; 
     this._gradient = []; 
     
