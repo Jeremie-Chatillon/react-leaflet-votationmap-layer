@@ -2,7 +2,7 @@
 
 This is layer to HTML canvas to display votations.
 
-![exemple](img\exemple.PNG)
+![exemple](img/exemple.PNG)
 
 
 
