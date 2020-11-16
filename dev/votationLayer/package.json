@@ -1,27 +1,12 @@
 {
-  "name": "votationlayer",
+  "name": "votationLayer",
   "version": "1.0.0",
-  "description": "It is a module to graphically display a voting layer from an HTML template",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+  "description": "This is a layer to display votation as circle in a box. This layer can be added to a leaflet map layer",
   "scripts": {
-    "test": "mocha './tests/test.js'"
-  },
-  "keywords": [
-    "votation",
-    "layer",
-    "display"
-  ],
-  "author": "Châtillon Jérémie",
-  "license": "ISC",
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^6.1.4"
+    "start": "serve",
   },
   "dependencies": {
-    "canvas": "^2.5.0",
-    "jsdom": "^15.0.0"
-  }
+    "serve": "^10.0.1"
+  },
+  "author": "Châtillon Jérémie"
 }
