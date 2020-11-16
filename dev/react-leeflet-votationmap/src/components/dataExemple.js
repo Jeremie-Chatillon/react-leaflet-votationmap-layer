@@ -350,6 +350,6 @@ export function dataExemple(iter, radius) {
         }
     }
 
-    //console.info("ret", ret)
+    
     return ret;
 }

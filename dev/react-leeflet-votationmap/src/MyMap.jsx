@@ -1,12 +1,10 @@
 import React from 'react';
 import L from 'leaflet';
 import {
-  Map, TileLayer, Marker, Popup, CircleMarker,
+  Map, TileLayer, Marker,
 } from 'react-leaflet';
 
 import VotationMapLayer from './components/VotationMapLayer';
-import VotMap2 from './components/VotMap2';
-import VotMap3 from './components/VotMap3';
 import { dataExemple } from './components/dataExemple';
 
 
@@ -18,7 +16,7 @@ export const addressPoints = [
   [46.528188, 6.615687, 1],
   [46.528180, 6.615680, 2],
   [46.5280, 6.61560, 3],
- 
+
 ]
 
 const gradient = {
@@ -38,6 +36,10 @@ const styles = {
   },
 }
 
+/**
+ * Cette classe intègre le votattionMapLayer dans une carte leaflet.
+ * Elle y ajoute des données de tests
+ */
 class MyMap extends React.Component {
   constructor() {
     super()
@@ -45,15 +47,15 @@ class MyMap extends React.Component {
       lat: 51.505,
       lng: -0.09,
       zoom: 13,
-      datas: dataExemple(100,100.0)
+      datas: dataExemple(100, 100.0)
     }
 
-    
-  
+
+
   }
-  componentDidMount(){
-    //console.info("dataExemple", dataExemple(100,100.0))
-    this.setState({datas:dataExemple(100 ,100.0)})
+  componentDidMount() {
+
+    this.setState({ datas: dataExemple(100, 100.0) })
   }
 
   render() {
@@ -75,20 +77,15 @@ class MyMap extends React.Component {
       <div style={map} >
         {console.info("stttt")}
         <Map key="map" style={map} center={[46.7149, 6.3719]} zoom={15}>
-          
+
 
           <TileLayer
-            key="tileLayer"
-            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-            url="https://maps.tilehosting.com/styles/streets/{z}/{x}/{y}.png?key=YrAASUxwnBPU963DZEig"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-          {/*
-          <VotationMapLayer
-            points={realData}
-          />
-*/}
 
-          <VotMap3
+
+          <VotationMapLayer
             fitBoundsOnLoad={false}
             fitBoundsOnUpdate={false}
             points={datas}

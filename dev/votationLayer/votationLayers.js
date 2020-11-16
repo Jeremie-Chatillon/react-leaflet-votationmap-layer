@@ -164,14 +164,11 @@ votationLayers.prototype = {
 
 
 
-    redraw: function() {
+    à : function() {
         this.resetImageData();
 
         const values = this.computeData();
         
-
-
-
         for (var key in values){
             const index = key * 4;
 

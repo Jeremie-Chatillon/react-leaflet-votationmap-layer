@@ -1,0 +1,12 @@
+{
+  "name": "votationLayer",
+  "version": "1.0.0",
+  "description": "This is a layer to display votation as circle in a box. This layer can be added to a leaflet map layer",
+  "scripts": {
+    "start": "serve",
+  },
+  "dependencies": {
+    "serve": "^10.0.1"
+  },
+  "author": "Châtillon Jérémie"
+}
